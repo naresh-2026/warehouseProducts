@@ -97,9 +97,11 @@
 // export default SignupPage;
 
 // src/SignupPage.jsx
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Link } from 'react-router-dom'; // Import Link
+import { useNavigate } from "react-router-dom";
 import './SignupPage.css';
+import API_BASE_URL from "./config";
 
 function SignupPage() {
   // ... (existing state and handleSubmit function)
@@ -108,6 +110,8 @@ function SignupPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isSignedUp, setIsSignedUp] = useState(false);
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     // ... (existing handleSubmit logic)
     event.preventDefault();
@@ -117,7 +121,7 @@ function SignupPage() {
     }
     setError('');
     try {
-      const response = await fetch('https://api.example.com/signup', {
+      const response = await fetch(`${API_BASE_URL}/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -126,6 +130,7 @@ function SignupPage() {
       });
       if (response.ok) {
         setIsSignedUp(true);
+        setMessage("Sign up successful!");
         console.log('Signup successful!');
       } else {
         const data = await response.json();
@@ -136,20 +141,24 @@ function SignupPage() {
       console.error('Signup error:', err);
     }
   };
-  if (isSignedUp) {
-    return (
-      <div className="success-container">
-        <h1>Welcome, {username}!</h1>
-        <p>Your account has been created. You can now log in.</p>
-        <Link to="/login">Go to Login Page</Link>
-      </div>
-    );
-  }
+  
+   // Show message then navigate after 2 seconds
+  useEffect(() => {
+    if (isSignedUp) {
+      const timer = setTimeout(() => {
+        navigate("/login");
+      }, 1200); // seconds delay
+
+      return () => clearTimeout(timer); // cleanup in case component unmounts
+    }
+  }, [isSignedUp, navigate]);
+
   return (
     <div className="signup-container">
       <form className="signup-form" onSubmit={handleSubmit}>
         <h2>Sign Up</h2>
         {error && <p className="error-message">{error}</p>}
+        {message && <p style={{ color: "green" }}>{message}</p>}
         <div className="input-group">
           <label htmlFor="username">Username</label>
           <input
