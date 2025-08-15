@@ -1,0 +1,151 @@
+.container {
+  min-height: 100vh;
+  background-color: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.login-message {
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #4b5563;
+}
+
+.product-form-card {
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 60vw;
+  min-width: 320px;
+  max-width: 800px;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid #e5e7eb;
+}
+
+.form-title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  color: #1f2937;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.form-input, .form-select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-size: 1rem;
+}
+
+.form-input:focus, .form-select:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.5);
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+}
+
+.yes-button, .no-button {
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.yes-button.active {
+  background-color: #10b981;
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+}
+
+.no-button.active {
+  background-color: #ef4444;
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+}
+
+.yes-button:not(.active) {
+  background-color: #e5e7eb;
+  color: #4b5563;
+}
+
+.yes-button:not(.active):hover {
+  background-color: #d1fae5;
+}
+
+.no-button:not(.active) {
+  background-color: #e5e7eb;
+  color: #4b5563;
+}
+
+.no-button:not(.active):hover {
+  background-color: #fee2e2;
+}
+
+.submit-button {
+  width: 100%;
+  background-color: #4f46e5;
+  color: #ffffff;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
+  border: none;
+  font-size: 1rem;
+}
+
+.submit-button:hover {
+  background-color: #4338ca;
+}
+
+.submit-button:disabled {
+  background-color: #a5b4fc;
+  cursor: not-allowed;
+}
+
+.message-display {
+  margin-top: 1.5rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.message-success {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.message-error {
+  background-color: #fee2e2;
+  color: #991b1b;
+}

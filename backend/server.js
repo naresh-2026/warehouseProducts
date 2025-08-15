@@ -1,6 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+require('dotenv').config();
 
 const app = express();
 const port = 3001;
@@ -9,40 +12,118 @@ const port = 3001;
 app.use(cors());
 app.use(bodyParser.json());
 
-// --- Login Route ---
-// This endpoint handles login requests from the frontend.
-app.post('/login', (req, res) => {
-  const { username, password } = req.body;
+const mongoURI = process.env.MONGO_URI;
 
-  console.log('--- Received Login Request ---');
-  console.log('Username:', username);
-  console.log('Password:', password);
+mongoose.connect(mongoURI)
+  .then(() => console.log('Successfully connected to MongoDB!'))
+  .catch(err => console.error('Could not connect to MongoDB:', err));
 
-  if (username && password) {
-    // In a real app, you would validate these credentials against a database.
-    res.status(200).json({ message: 'Login request received successfully!' });
-  } else {
-    res.status(400).json({ message: 'Missing username or password.' });
+// --- User Schema and Model ---
+// This defines the structure for user documents in your MongoDB collection.
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
   }
 });
 
-// --- Signup Route ---
-// This new endpoint handles signup requests from the frontend.
-app.post('/signup', (req, res) => {
+const User = mongoose.model('User', userSchema);
+
+// --- API Routes ---
+
+// Route to handle product form submission
+app.post('/api/add-product', async (req, res) => {
+  try {
+    const { username, productName, quantity, itemType, isPublic } = req.body;
+
+    // Create a new product document using the Mongoose model
+    const newProduct = new Product({
+      username: username,
+      productName: productName,
+      quantity: quantity,
+      itemType: itemType,
+      isPublic: isPublic,
+      // The timestamp is handled automatically by the model
+    });
+
+    // Save the document to the database
+    await newProduct.save();
+
+    res.status(201).json({ message: 'Product added successfully!', product: newProduct });
+  } catch (error) {
+    console.error('Error adding product:', error);
+    res.status(500).json({ message: 'Failed to add product.', error: error.message });
+  }
+});
+
+
+
+// Signup Route
+app.post('/signup', async (req, res) => {
   const { username, email, password } = req.body;
 
-  console.log('--- Received Signup Request ---');
-  console.log('Username:', username);
-  console.log('Email:', email);
-  console.log('Password:', password);
+  try {
+    // 1. Check if user already exists
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(409).json({ message: 'Username already exists.' });
+    }
 
-  // Perform a basic check to ensure all required fields are present.
-  if (username && email && password) {
-    // In a real application, you would save this new user to a database.
-    res.status(200).json({ message: 'Signup request received successfully!' });
-  } else {
-    // Send an error if any of the required data is missing.
-    res.status(400).json({ message: 'Missing username, email, or password.' });
+    // 2. Hash the password for security
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // 3. Create a new user instance
+    const newUser = new User({
+      username,
+      email,
+      password: hashedPassword
+    });
+
+    // 4. Save the user to the database
+    await newUser.save();
+
+    res.status(201).json({ message: 'User signed up successfully!' });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error creating user.' });
+  }
+});
+
+// Login Route
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    // 1. Find the user by username
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid username or password.' });
+    }
+
+    // 2. Compare the provided password with the stored hashed password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Invalid username or password.' });
+    }
+
+    // 3. If passwords match, login is successful
+    res.status(200).json({ message: 'Login successful!' });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error logging in.' });
   }
 });
 

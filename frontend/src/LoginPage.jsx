@@ -1,6 +1,8 @@
 // src/LoginPage.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; // Import Link
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import './LoginPage.css';
 import API_BASE_URL from "./config";
 
@@ -10,6 +12,7 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     // ... (existing handleSubmit logic)
     event.preventDefault();
@@ -38,14 +41,12 @@ function LoginPage() {
       console.error('Login error:', err);
     }
   };
-  if (isLoggedIn) {
-    return (
-      <div className="success-container">
-        <h1>Welcome, {username}!</h1>
-        <p>You have successfully logged in.</p>
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (isLoggedIn) {
+      // Redirect to ProductForm page
+      navigate("/ProductForm"); // make sure this route is defined in your router
+    }
+  }, [isLoggedIn, navigate]);
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={handleSubmit}>

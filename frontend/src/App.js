@@ -28,6 +28,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginPage from './LoginPage';
 import SignupPage from './SignupPage';
+import ProductForm from './ProductForm';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/productform" element={<ProductForm />} />
         <Route path="/" element={<LoginPage />} /> {/* Optional: default route */}
       </Routes>
     </BrowserRouter>
