@@ -42,6 +42,22 @@ const User = mongoose.model('User', userSchema);
 
 // --- API Routes ---
 
+// NEW: Route to get the last 5 recently added products for a specific user
+app.get('/api/products/recent/:username', async (req, res) => {
+  try {
+    const { username } = req.params;
+    
+    const recentProducts = await Product.find({ username: username })
+      .sort({ timestamp: -1 })
+      .limit(5);
+
+    res.status(200).json(recentProducts);
+  } catch (error) {
+    console.error('Error fetching recent products:', error);
+    res.status(500).json({ message: 'Failed to fetch recent products.' });
+  }
+});
+
 // Route to handle product form submission
 app.post('/api/add-product', async (req, res) => {
   try {

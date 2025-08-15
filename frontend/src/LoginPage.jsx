@@ -43,7 +43,7 @@ function LoginPage() {
   };
   useEffect(() => {
   if (isLoggedIn) {
-    navigate("/ProductForm", { state: { username } });
+    navigate("/ProductList", { state: { username } });
   }
 }, [isLoggedIn, navigate, username]);
   return (

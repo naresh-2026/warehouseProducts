@@ -1,0 +1,108 @@
+.product-list-card {
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 60vw;
+  min-width: 320px;
+  max-width: 800px;
+  border: 1px solid #e5e7eb;
+  margin-top: 2rem;
+}
+
+.list-title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  color: #1f2937;
+  margin-bottom: 2rem;
+}
+
+.product-list {
+  /* Use a responsive grid layout */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.product-item {
+  /* Style each item as a small block */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  background-color: #f9fafb;
+}
+
+.product-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-name {
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.product-details {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.product-quantity {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #4f46e5;
+  text-align: right;
+  margin-top: 1rem;
+}
+
+.no-items {
+  text-align: center;
+  color: #9ca3af;
+  font-style: italic;
+  padding: 1rem;
+}
+
+/* Styles for the floating button remain unchanged */
+.add-product-button {
+  position: fixed;
+  bottom: 10vh; /* 10% from the bottom */
+  right: 10vw;  /* 10% from the right */
+  width: 60px;
+  height: 60px;
+  background-color: #4f46e5;
+  color: white;
+  font-size: 2rem;
+  font-weight: 300;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.add-product-button:hover {
+  background-color: #4338ca;
+  transform: scale(1.1);
+}
+
+.add-product-button:active {
+  transform: scale(0.9);
+}
