@@ -1,24 +1,11 @@
 import React, { useState } from 'react';
 import './ProductForm.css'; // Import the CSS file
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import API_BASE_URL from "./config";
 
-const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-
-  return (
-    <div className="container">
-      {isLoggedIn ? (
-        <ProductForm />
-      ) : (
-        <div className="login-message">Please log in to view this page.</div>
-      )}
-    </div>
-  );
-};
-
 const ProductForm = () => {
-     const location = useLocation();
+  const location = useLocation();
+  const navigate = useNavigate(); // Initialize the navigate function
   const { username } = location.state || {}; // Get username from navigation state
 
   const [productName, setProductName] = useState('');
@@ -85,95 +72,110 @@ const ProductForm = () => {
     }
   };
 
-  return (
-    <div className="product-form-card">
-      <h2 className="form-title">Add New Product</h2>
-      
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="productName" className="form-label">Product Name</label>
-          <input
-            type="text"
-            id="productName"
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
-            required
-            className="form-input"
-            placeholder="e.g., Laptop, T-shirt"
-          />
-        </div>
-        
-        <div className="form-group">
-          <label htmlFor="quantity" className="form-label">Quantity</label>
-          <input
-            type="number"
-            id="quantity"
-            value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
-            required
-            className="form-input"
-            placeholder="e.g., 50"
-          />
-        </div>
-        
-        <div className="form-group">
-          <label htmlFor="itemType" className="form-label">Item Type</label>
-          <select
-            id="itemType"
-            value={itemType}
-            onChange={(e) => setItemType(e.target.value)}
-            required
-            className="form-select"
-          >
-            <option value="" disabled>Select an item type</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Apparel">Apparel</option>
-            <option value="Books">Books</option>
-            <option value="Home Goods">Home Goods</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        
-        <div className="form-group">
-          <span className="form-label">Display Publicly?</span>
-          <div className="button-group">
-            <button
-              type="button"
-              onClick={() => setIsPublic(true)}
-              className={`yes-button ${isPublic ? 'active' : ''}`}
-            >
-              Yes
-            </button>
-            <button
-              type="button"
-              onClick={() => setIsPublic(false)}
-              className={`no-button ${!isPublic ? 'active' : ''}`}
-            >
-              No
-            </button>
-          </div>
-        </div>
-        
-        <button
-          type="submit"
-          className="submit-button"
-          disabled={isLoading}
-        >
-          {isLoading ? 'Adding...' : 'Add Product'}
-        </button>
-      </form>
+  const handleNavigateToList = () => {
+    navigate('/ProductList', { state: { username } });
+  };
 
-      {message && (
-        <div
-          className={`message-display ${
-            message.type === 'success' ? 'message-success' : 'message-error'
-          }`}
+  return (
+    <div className="container">
+      <div className="product-form-card">
+        <h2 className="form-title">Add New Product</h2>
+        
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="productName" className="form-label">Product Name</label>
+            <input
+              type="text"
+              id="productName"
+              value={productName}
+              onChange={(e) => setProductName(e.target.value)}
+              required
+              className="form-input"
+              placeholder="e.g., Laptop, T-shirt"
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="quantity" className="form-label">Quantity</label>
+            <input
+              type="number"
+              id="quantity"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              required
+              className="form-input"
+              placeholder="e.g., 50"
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="itemType" className="form-label">Item Type</label>
+            <select
+              id="itemType"
+              value={itemType}
+              onChange={(e) => setItemType(e.target.value)}
+              required
+              className="form-select"
+            >
+              <option value="" disabled>Select an item type</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Apparel">Apparel</option>
+              <option value="Books">Books</option>
+              <option value="Home Goods">Home Goods</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          
+          <div className="form-group">
+            <span className="form-label">Display Publicly?</span>
+            <div className="button-group">
+              <button
+                type="button"
+                onClick={() => setIsPublic(true)}
+                className={`yes-button ${isPublic ? 'active' : ''}`}
+              >
+                Yes
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsPublic(false)}
+                className={`no-button ${!isPublic ? 'active' : ''}`}
+              >
+                No
+              </button>
+            </div>
+          </div>
+          
+          <button
+            type="submit"
+            className="submit-button"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Adding...' : 'Add Product'}
+          </button>
+        </form>
+
+        {/* New button to navigate to the list */}
+        <button
+            type="button"
+            onClick={handleNavigateToList}
+            className="list-items-button"
         >
-          {message.text}
-        </div>
-      )}
+            List Items
+        </button>
+
+        {message && (
+          <div
+            className={`message-display ${
+              message.type === 'success' ? 'message-success' : 'message-error'
+            }`}
+          >
+            {message.text}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
-export default App;
+export default ProductForm;

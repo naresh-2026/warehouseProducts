@@ -49,12 +49,24 @@ app.get('/api/products/recent/:username', async (req, res) => {
     
     const recentProducts = await Product.find({ username: username })
       .sort({ timestamp: -1 })
-      .limit(5);
+      .limit(50);
 
     res.status(200).json(recentProducts);
   } catch (error) {
     console.error('Error fetching recent products:', error);
     res.status(500).json({ message: 'Failed to fetch recent products.' });
+  }
+});
+
+// Route to get all products for a specific user (new endpoint)
+app.get('/api/products/all/:username', async (req, res) => {
+  try {
+    const { username } = req.params;
+    const allProducts = await Product.find({ username: username });
+    res.status(200).json(allProducts);
+  } catch (error) {
+    console.error('Error fetching all products:', error);
+    res.status(500).json({ message: 'Failed to fetch all products.' });
   }
 });
 
