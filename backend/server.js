@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -12,6 +13,12 @@ const port = 3001;
 // Middleware to enable CORS and parse JSON request bodies
 app.use(cors());
 app.use(bodyParser.json());
+
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 const mongoURI = process.env.MONGO_URI;
 
