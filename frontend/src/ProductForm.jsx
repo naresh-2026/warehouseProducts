@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './ProductForm.css'; // Import the CSS file
+import { useLocation } from "react-router-dom";
+import API_BASE_URL from "./config";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -16,6 +18,9 @@ const App = () => {
 };
 
 const ProductForm = () => {
+     const location = useLocation();
+  const { username } = location.state || {}; // Get username from navigation state
+
   const [productName, setProductName] = useState('');
   const [quantity, setQuantity] = useState('');
   const [itemType, setItemType] = useState('');
@@ -45,6 +50,7 @@ const ProductForm = () => {
 
     // Create the data object to send to the backend
     const productData = {
+      username,
       productName,
       quantity: Number(quantity),
       itemType,
@@ -53,7 +59,7 @@ const ProductForm = () => {
 
     try {
       // Send the data to the backend endpoint
-      const response = await fetch('/api/add-product', {
+      const response = await fetch(`${API_BASE_URL}/api/add-product`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

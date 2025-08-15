@@ -42,11 +42,10 @@ function LoginPage() {
     }
   };
   useEffect(() => {
-    if (isLoggedIn) {
-      // Redirect to ProductForm page
-      navigate("/ProductForm"); // make sure this route is defined in your router
-    }
-  }, [isLoggedIn, navigate]);
+  if (isLoggedIn) {
+    navigate("/ProductForm", { state: { username } });
+  }
+}, [isLoggedIn, navigate, username]);
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={handleSubmit}>

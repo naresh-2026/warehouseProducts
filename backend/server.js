@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const Product = require('./productModel'); // Import the product model
 require('dotenv').config();
 
 const app = express();
