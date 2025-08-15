@@ -76,6 +76,10 @@ const ProductForm = () => {
     navigate('/ProductList', { state: { username } });
   };
 
+  const handleNavigateToUpdate = () => {
+    navigate('/UpdateForm', { state: { username } });
+  };
+
   return (
     <div className="container">
       <div className="product-form-card">
@@ -163,7 +167,13 @@ const ProductForm = () => {
         >
             List Items
         </button>
-
+        <button
+            type="button"
+            onClick={handleNavigateToUpdate}
+            className="list-items-button"
+        >
+            update items
+        </button>
         {message && (
           <div
             className={`message-display ${

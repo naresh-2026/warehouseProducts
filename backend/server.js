@@ -95,6 +95,48 @@ app.post('/api/add-product', async (req, res) => {
   }
 });
 
+// Define the API endpoint for updating a product
+app.put('/api/update-product', async (req, res) => {
+    try {
+        const { username, productName, quantity, itemType } = req.body;
+
+        // Basic validation of input data
+        if (!username || !productName || !quantity || !itemType) {
+            return res.status(400).json({ message: 'Missing required fields.' });
+        }
+
+        // Find the product by its name and item type for the specific user
+        const product = await Product.findOne({
+            username: username,
+            productName: productName,
+            itemType: itemType,
+        });
+
+        // Check if the product exists
+        if (!product) {
+            return res.status(404).json({ message: 'Item not found in the database.' });
+        }
+
+        // Calculate the new quantity
+        const newQuantity = product.quantity + quantity;
+
+        // Conditional logic: Update or Delete
+        if (newQuantity > 0) {
+            // Update the quantity if it's greater than 0
+            product.quantity = newQuantity;
+            await product.save(); // Save the updated document
+            res.status(200).json({ message: 'Product updated successfully!' });
+        } else {
+            // Delete the document if the new quantity is 0 or less
+            await Product.findByIdAndDelete(product._id);
+            res.status(200).json({ message: 'Product deleted because quantity was reduced to 0 or less.' });
+        }
+
+    } catch (error) {
+        console.error('Error updating product:', error);
+        res.status(500).json({ message: 'An internal server error occurred.' });
+    }
+});
 
 
 // Signup Route
