@@ -1,4 +1,2 @@
-// src/config.js
-const API_BASE_URL = ""; // change this when needed
-
+const API_BASE_URL = process.env.REACT_APP_API_URL || "";
 export default API_BASE_URL;

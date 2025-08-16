@@ -8,7 +8,7 @@ const Product = require('./productModel'); // Import the product model
 require('dotenv').config();
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT ||3001;
 
 // Middleware to enable CORS and parse JSON request bodies
 app.use(cors());
