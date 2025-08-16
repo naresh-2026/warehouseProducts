@@ -1,11 +1,11 @@
-**#1. Project Overview**
+**# 1. Project Overview**
 
 ***Project Name: ProductManagement***
 
-##Purpose:
+## Purpose:
 The ProductManagement system helps you efficiently track and manage various products stored in a warehouse. It provides a simple interface to maintain product information and monitor stock levels.
 
-##Key Features:
+## Key Features:
 
 Keep track of products in the warehouse.
 
@@ -13,7 +13,7 @@ Perform basic CRUD (Create, Read, Update, Delete) operations on products.
 
 Option to mark products as publicly visible or private.
 
-**#2. Objectives**
+**# 2. Objectives**
 
 Provide a user-friendly system to manage product inventory.
 
@@ -23,7 +23,7 @@ Enable real-time tracking and updates of product quantities.
 
 Support visibility control for products (public/private).
 
-**#3. Functional Requirements**
+**# 3. Functional Requirements**
 
 User Authentication: Users can register and log in using secure credentials.
 
@@ -39,11 +39,11 @@ Product Management (CRUD):
 
 **Public Visibility:** Users can choose to display products publicly.
 
-**#4. Database Architecture**
+**# 4. Database Architecture**
 
 The system uses a relational database with two primary tables:
 
-##4.1 Users Table
+## 4.1 Users Table
 
 Stores user authentication details.
 
@@ -52,7 +52,7 @@ username	VARCHAR	Unique username for login
 password	VARCHAR	Hashed password for security
 
 
-##4.2 Products Table
+## 4.2 Products Table
 
 Stores product details associated with each user.
 
@@ -64,9 +64,9 @@ type	VARCHAR	Type or category of the product
 display_publicly	BOOLEAN	Whether the product is visible publicly (Yes/No)
 timestamp	TIMESTAMP	Default timestamp of product creation
 
-**#5. System Architecture**
+**# 5. System Architecture**
 
-##Overview:
+## Overview:
 
 The application uses a client-server architecture.
 
@@ -74,7 +74,7 @@ Users interact with a frontend interface (web or desktop) to perform CRUD operat
 
 The backend handles authentication, authorization, and database operations.
 
-##Data Flow:
+## Data Flow:
 
 User logs in → backend validates credentials against the Users table.
 
