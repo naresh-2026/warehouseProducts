@@ -1,4 +1,4 @@
-**# 1. Project Overview**
+# **1. Project Overview**
 
 ***Project Name: ProductManagement***
 
@@ -13,7 +13,7 @@ Perform basic CRUD (Create, Read, Update, Delete) operations on products.
 
 Option to mark products as publicly visible or private.
 
-**# 2. Objectives**
+# **2. Objectives**
 
 Provide a user-friendly system to manage product inventory.
 
@@ -23,23 +23,19 @@ Enable real-time tracking and updates of product quantities.
 
 Support visibility control for products (public/private).
 
-**# 3. Functional Requirements**
+# **3. Functional Requirements**
 
 User Authentication: Users can register and log in using secure credentials.
 
 Product Management (CRUD):
 
-**Create:** Add new products with quantity, type, and visibility.
+>**Create:** Add new products with quantity, type, and visibility.
+>**Read:** View products owned by the user
+>**Update:** Modify product details such as quantity or type.
+>**Delete:** Remove products from the system.
+>**Public Visibility:** Users can choose to display products publicly.
 
-**Read:** View products owned by the user.
-
-**Update:** Modify product details such as quantity or type.
-
-**Delete:** Remove products from the system.
-
-**Public Visibility:** Users can choose to display products publicly.
-
-**# 4. Database Architecture**
+# **4. Database Architecture**
 
 The system uses a relational database with two primary tables:
 
@@ -47,24 +43,27 @@ The system uses a relational database with two primary tables:
 
 Stores user authentication details.
 
-Column Name	Type	Description
-username	VARCHAR	Unique username for login
-password	VARCHAR	Hashed password for security
+| Column  | Name	| Type	| Description |
+|:---|:---:|:---:|:---:|
+| username	| VARCHAR| 	Unique | username for login |
+| password	| VARCHAR	| Hashed | password for security |
 
 
 ## 4.2 Products Table
 
 Stores product details associated with each user.
 
-Column Name	Type	Description
-username	VARCHAR	The user who owns the product
-product	VARCHAR	Name of the product
-quantity	INT	Quantity of the product
-type	VARCHAR	Type or category of the product
-display_publicly	BOOLEAN	Whether the product is visible publicly (Yes/No)
-timestamp	TIMESTAMP	Default timestamp of product creation
+| Column Name      | Type      | Description                                  |
+|-----------------|----------|----------------------------------------------|
+| username        | VARCHAR  | The user who owns the product               |
+| product         | VARCHAR  | Name of the product                          |
+| quantity        | INT      | Quantity of the product                      |
+| type            | VARCHAR  | Type or category of the product              |
+| display_publicly| BOOLEAN  | Whether the product is visible publicly (Yes/No) |
+| timestamp       | TIMESTAMP| Default timestamp of product creation       |
 
-**# 5. System Architecture**
+
+# **5. System Architecture**
 
 ## Overview:
 
